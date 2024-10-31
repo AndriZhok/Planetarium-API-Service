@@ -18,7 +18,9 @@ User = get_user_model()
 
 class AstronomyShowViewSetTests(APITestCase):
     def setUp(self):
-        self.admin_user = User.objects.create_superuser(email='admin@test.com', password='password')
+        self.admin_user = User.objects.create_superuser(
+            email="admin@test.com", password="password"
+        )
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin_user)
         self.theme = ShowTheme.objects.create(name="Science")
@@ -28,54 +30,75 @@ class AstronomyShowViewSetTests(APITestCase):
         self.astronomy_show.themes.add(self.theme)
 
     def test_list_astronomy_shows(self):
-        url = reverse('planetarium:astronomyshow-list')
+        url = reverse("planetarium:astronomyshow-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_astronomy_show(self):
-        url = reverse('planetarium:astronomyshow-detail', args=[self.astronomy_show.id])
+        url = reverse("planetarium:astronomyshow-detail", args=[self.astronomy_show.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+
 class ShowThemeViewSetTests(APITestCase):
     def setUp(self):
-        self.client.force_authenticate(user=User.objects.create_superuser(email='admin@test.com', password='password'))
+        self.client.force_authenticate(
+            user=User.objects.create_superuser(
+                email="admin@test.com", password="password"
+            )
+        )
         self.theme = ShowTheme.objects.create(name="Physics")
 
     def test_list_show_themes(self):
-        url = reverse('planetarium:showtheme-list')
+        url = reverse("planetarium:showtheme-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class PlanetariumDomeViewSetTests(APITestCase):
     def setUp(self):
-        self.client.force_authenticate(user=User.objects.create_superuser(email='admin@test.com', password='password'))
-        self.dome = PlanetariumDome.objects.create(name="Galaxy Dome", rows=20, seats_in_row=30)
+        self.client.force_authenticate(
+            user=User.objects.create_superuser(
+                email="admin@test.com", password="password"
+            )
+        )
+        self.dome = PlanetariumDome.objects.create(
+            name="Galaxy Dome", rows=20, seats_in_row=30
+        )
 
     def test_list_planetarium_domes(self):
-        url = reverse('planetarium:planetariumdome-list')
+        url = reverse("planetarium:planetariumdome-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class ShowSessionViewSetTests(APITestCase):
     def setUp(self):
-        self.client.force_authenticate(user=User.objects.create_superuser(email='admin@test.com', password='password'))
-        self.astronomy_show = AstronomyShow.objects.create(title="Nebula Show", description="Exploring nebulas")
-        self.dome = PlanetariumDome.objects.create(name="Nebula Dome", rows=10, seats_in_row=15)
+        self.client.force_authenticate(
+            user=User.objects.create_superuser(
+                email="admin@test.com", password="password"
+            )
+        )
+        self.astronomy_show = AstronomyShow.objects.create(
+            title="Nebula Show", description="Exploring nebulas"
+        )
+        self.dome = PlanetariumDome.objects.create(
+            name="Nebula Dome", rows=10, seats_in_row=15
+        )
         self.show_time = make_aware(datetime(2024, 1, 1, 10, 0))
         self.show_session = ShowSession.objects.create(
-            astronomy_show=self.astronomy_show, planetarium_dome=self.dome, show_time=self.show_time
+            astronomy_show=self.astronomy_show,
+            planetarium_dome=self.dome,
+            show_time=self.show_time,
         )
 
     def test_list_show_sessions(self):
-        url = reverse('planetarium:showsession-list')
+        url = reverse("planetarium:showsession-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_show_session(self):
-        url = reverse('planetarium:showsession-list')
+        url = reverse("planetarium:showsession-list")
         data = {
             "astronomy_show": self.astronomy_show.id,
             "planetarium_dome": self.dome.id,
@@ -92,7 +115,7 @@ class ReservationViewSetTests(APITestCase):
         self.reservation = Reservation.objects.create(user=self.user)
 
     def test_list_reservations(self):
-        url = reverse('planetarium:reservation-list')
+        url = reverse("planetarium:reservation-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -102,17 +125,23 @@ class TicketViewSetTests(APITestCase):
         self.user = User.objects.create_user(email="user@test.com", password="password")
         self.client.force_authenticate(user=self.user)
         self.reservation = Reservation.objects.create(user=self.user)
-        self.astronomy_show = AstronomyShow.objects.create(title="Planetary Show", description="Exploring planets")
-        self.dome = PlanetariumDome.objects.create(name="Planet Dome", rows=15, seats_in_row=20)
+        self.astronomy_show = AstronomyShow.objects.create(
+            title="Planetary Show", description="Exploring planets"
+        )
+        self.dome = PlanetariumDome.objects.create(
+            name="Planet Dome", rows=15, seats_in_row=20
+        )
         self.show_time = make_aware(datetime(2024, 1, 1, 12, 0))
         self.session = ShowSession.objects.create(
-            astronomy_show=self.astronomy_show, planetarium_dome=self.dome, show_time=self.show_time
+            astronomy_show=self.astronomy_show,
+            planetarium_dome=self.dome,
+            show_time=self.show_time,
         )
         self.ticket = Ticket.objects.create(
             row=5, seat=10, show_session=self.session, reservation=self.reservation
         )
 
     def test_list_tickets(self):
-        url = reverse('planetarium:ticket-list')
+        url = reverse("planetarium:ticket-list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
