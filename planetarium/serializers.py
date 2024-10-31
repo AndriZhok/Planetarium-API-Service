@@ -6,7 +6,7 @@ from planetarium.models import (
     PlanetariumDome,
     ShowSession,
     Reservation,
-    Ticket
+    Ticket,
 )
 
 
@@ -19,7 +19,10 @@ class AstronomyShowSerializer(serializers.ModelSerializer):
 class ShowThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShowTheme
-        fields = ("id", "name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class AstronomyShowListSerializer(serializers.ModelSerializer):
@@ -90,7 +93,9 @@ class ShowSessionShortSerializer(ShowSessionSerializer):
 
 
 class TicketCreateSerializer(serializers.ModelSerializer):
-    show_session = serializers.PrimaryKeyRelatedField(queryset=ShowSession.objects.all())
+    show_session = serializers.PrimaryKeyRelatedField(
+        queryset=ShowSession.objects.all()
+    )
     reservation = serializers.PrimaryKeyRelatedField(queryset=Reservation.objects.all())
 
     class Meta:
@@ -102,7 +107,9 @@ class TicketCreateSerializer(serializers.ModelSerializer):
         seat = data.get("seat")
         show_session = data.get("show_session")
 
-        if Ticket.objects.filter(show_session=show_session, row=row, seat=seat).exists():
+        if Ticket.objects.filter(
+            show_session=show_session, row=row, seat=seat
+        ).exists():
             raise serializers.ValidationError("Це місце вже зайняте для цієї сесії.")
 
         return data

@@ -14,16 +14,18 @@ class ShowTheme(models.Model):
 
 
 def astronomy_show_file_path(instance, filename):
-    ext = filename.split('.')[-1]
+    ext = filename.split(".")[-1]
     filename = f"{instance.title}-{uuid.uuid4()}.{ext}"
-    return os.path.join('uploads', 'movies', filename)
+    return os.path.join("uploads", "movies", filename)
 
 
 class AstronomyShow(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     themes = models.ManyToManyField(ShowTheme, related_name="astronomy_shows")
-    image = models.ImageField(null=True, upload_to=astronomy_show_file_path, max_length=255)
+    image = models.ImageField(
+        null=True, upload_to=astronomy_show_file_path, max_length=255
+    )
 
     def __str__(self):
         return self.title
