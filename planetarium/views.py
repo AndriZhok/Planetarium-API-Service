@@ -5,7 +5,8 @@ from planetarium.models import (
     AstronomyShow,
     ShowTheme,
     PlanetariumDome,
-    ShowSession
+    ShowSession,
+    Reservation
 )
 from planetarium.serializers import (
     AstronomyShowSerializer,
@@ -15,7 +16,8 @@ from planetarium.serializers import (
     ShowSessionSerializer,
     ShowSessionListSerializer,
     ShowSessionDetailSerializer,
-    AstronomyShowDetailSerializer
+    AstronomyShowDetailSerializer,
+    ReservationSerializer
 )
 
 
@@ -51,3 +53,8 @@ class ShowSesionViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return ShowSessionDetailSerializer
         return ShowSessionSerializer
+
+
+class ReservationViewSet(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
