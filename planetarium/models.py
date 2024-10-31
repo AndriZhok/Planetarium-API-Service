@@ -23,6 +23,9 @@ class PlanetariumDome(models.Model):
     rows = models.IntegerField()
     seats_in_row = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
 
 class ShowSession(models.Model):
     astronomy_show = models.ForeignKey(AstronomyShow, on_delete=models.CASCADE)
