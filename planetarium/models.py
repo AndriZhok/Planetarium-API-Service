@@ -1,6 +1,7 @@
 from django.db import models
 from app import settings
 
+
 class ShowTheme(models.Model):
     name = models.CharField(max_length=100)
 
