@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "user",
     "planetarium",
     "rest_framework",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -135,4 +136,21 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Planetarium API',
+    'DESCRIPTION': 'API для управління шоу в планетарії, квитками, сесіями та резервуванням.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'defaultModelRendering': 'model',  # Інший варіант: 'example'
+        'displayRequestDuration': True,
+    },
+
+    'SORT_OPERATIONS': False,
+    'SORT_TAGS': True,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
