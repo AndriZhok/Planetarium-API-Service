@@ -1,5 +1,9 @@
+import os
+import uuid
+
 from django.db import models
 from app import settings
+from django.utils.text import slugify
 
 
 class ShowTheme(models.Model):
@@ -9,10 +13,17 @@ class ShowTheme(models.Model):
         return self.name
 
 
+def astronomy_show_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{instance.title}-{uuid.uuid4()}.{ext}"
+    return os.path.join('uploads', 'movies', filename)
+
+
 class AstronomyShow(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     themes = models.ManyToManyField(ShowTheme, related_name="astronomy_shows")
+    image = models.ImageField(null=True, upload_to=astronomy_show_file_path, max_length=255)
 
     def __str__(self):
         return self.title
