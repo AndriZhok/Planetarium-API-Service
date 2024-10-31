@@ -3,7 +3,6 @@ import uuid
 
 from django.db import models
 from app import settings
-from django.utils.text import slugify
 
 
 class ShowTheme(models.Model):
