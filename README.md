@@ -6,8 +6,8 @@ Do you like learning new things about stars and planets? If so - this project is
 Install PostgresSQL and create db
 
 ```
-git clone https: //github.com/Y-Havryliv/cinema-API.git
-cd cinema_API
+git clone [https: //github.com/Y-Havryliv/cinema-API.git](https://github.com/AndriZhok/Planetarium-API-Service.git)
+cd Planetarium-API-Service
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
