@@ -109,5 +109,9 @@ Endpoints for managing shows, themes, domes, sessions, reservations, and tickets
 <img width="523" alt="Знімок екрана 2024-11-01 о 15 23 08" src="https://github.com/user-attachments/assets/f339cb16-939d-4b63-9dc0-cf23b55603f0">
 
 
+## App view
+
+<img width="1333" alt="image" src="https://github.com/user-attachments/assets/97592083-eb0b-41bf-963f-19cac6b06129">
+
 
 
